@@ -1,0 +1,39 @@
+name: Build evaluator APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Install dependencies
+        run: npm ci
+      - name: Run reliability tests
+        run: npm run verify
+      - name: Generate Android project
+        env:
+          EXPO_PUBLIC_TAKO_PROXY_URL: ${{ secrets.DEMO_RELAY_URL }}
+          EXPO_PUBLIC_DEMO_ACCESS_TOKEN: ${{ secrets.DEMO_ACCESS_TOKEN }}
+        run: npx expo prebuild --platform android --clean --no-install
+      - name: Build installable APK
+        env:
+          EXPO_PUBLIC_TAKO_PROXY_URL: ${{ secrets.DEMO_RELAY_URL }}
+          EXPO_PUBLIC_DEMO_ACCESS_TOKEN: ${{ secrets.DEMO_ACCESS_TOKEN }}
+        run: npm run build:demo
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Volkswagen-Assistant-Demo
+          path: android/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error

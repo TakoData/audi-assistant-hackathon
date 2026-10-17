@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Audi Assistant Demo",
+    "slug": "vw-tako-drive",
+    "version": "1.4.0",
+    "orientation": "landscape",
+    "android": {
+      "package": "com.tako.volkswagen.demo",
+      "versionCode": 6,
+      "adaptiveIcon": {
+        "backgroundColor": "#07100F"
+      },
+      "permissions": [
+        "RECORD_AUDIO"
+      ],
+      "softwareKeyboardLayoutMode": "pan"
+    },
+    "plugins": [
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Allow Audi Assistant to hear your questions."
+        }
+      ],
+      "expo-secure-store",
+      "./plugins/withImmersiveDisplay.cjs"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+node_modules/
+.expo/
+android/
+.env
+.env.local
+.env.*.local
+.vercel/
+npm-debug.log*
+*.keystore
+*.jks
+*.apk
+*.aab
+*.zip
+.DS_Store
+VW Assistant Demo - Share/
+Start VW Tako Demo.command
+artifacts/
+.local-tools/
